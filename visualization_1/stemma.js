@@ -47,12 +47,12 @@ d3.select(window).on('load', function(d) {
 	var highlight_y = d3.select("circle.sheets." + initialHighlight).attr( 'cy' );
 	//console.log(highlight_y);
 	if (!svg._voronoi) {
-    console.log('computing the voronoi for initial highlightâ€¦');
+    console.log('computing the voronoi for initial highlight');
     svg._voronoi = d3.voronoi()
 	  .x(function(d) { return xScale(d.pos_x); })
 	  .y(function(d) { return yScale(d.pos_y); })
     (data.sheets);
-    console.log('â€¦done.');
+    console.log('done.');
   }
   	// create site for initial selection
 	site = svg._voronoi.find(highlight_x, highlight_y, maxDistanceFromPoint);
@@ -244,12 +244,12 @@ svg.on('click', voronoiClick);
 
 function voronoi(d) {
   if (!svg._voronoi) {
-    console.log('computing the voronoiâ€¦');
+    console.log('computing the voronoi');
     svg._voronoi = d3.voronoi()
 	  .x(function(d) { return xScale(d.pos_x); })
 	  .y(function(d) { return yScale(d.pos_y); })
     (data.sheets);
-    console.log('â€¦done.');
+    console.log('done.');
   }
   // using d3.mouse on the g node instead of the svg node so we don't have to worry about margin and transforms
   var p = d3.mouse(g.node()), site;
@@ -289,50 +289,50 @@ function voronoiClick(d) {
 	
 if (document.getElementById("checkMacro").checked) {
 	console.log("checkMacro is checked")
-    console.log('re-computing the voronoiâ€¦');
+    console.log('re-computing the voronoi');
     svg._voronoi = d3.voronoi()
 	  .x(function(d) { return xScale(d.pos_x); })
 	  .y(function(d) { return yScale(d.pos_y); })
     (data.sheets);
-    console.log('â€¦done.');
+    console.log('done.');
 	} //
 if (document.getElementById("checkPretexts").checked) {
-    console.log('re-computing the voronoiâ€¦');
+    console.log('re-computing the voronoi');
     svg._voronoi = d3.voronoi()
 	  .x(function(d) { return xScale(d.pos_x); })
 	  .y(function(d) { return yScale(d.pos_y); })
     (data.pretexts);
-    console.log('â€¦done.');
+    console.log('done.');
 	}
 /*
 <!-- if (document.getElementById("checkContexts").checked) {
-    console.log('re-computing the voronoiâ€¦');
+    console.log('re-computing the voronoi');
     svg._voronoi = d3.voronoi()
 	  .x(function(d) { return xScale(d.pos_x); })
 	  .y(function(d) { return yScale(d.pos_y); })
     (data.contexts);
-    console.log('â€¦done.');
+    console.log('done.');
 	}
 	-->
 	
 */
 // if (document.getElementById("checkBio").checked) {
-//     console.log('re-computing the voronoiâ€¦');
+//     console.log('re-computing the voronoi');
 //     svg._voronoi = d3.voronoi()
 // 	  .x(function(d) { return xScale(d.pos_x); })
 // 	  .y(function(d) { return yScale(d.pos_y); })
 //     (data.biography);
-//     console.log('â€¦done.');
+//     console.log('done.');
 // 	}	
 
   //if (!svg._voronoi) {
  //  	if (!d3.select("#checkMacro").checked) { // fix for content filtering
- //    console.log('re-computing the voronoiâ€¦');
+ //    console.log('re-computing the voronoi');
  //    svg._voronoi = d3.voronoi()
 	//   .x(function(d) { return xScale(d.pos_x); })
 	//   .y(function(d) { return yScale(d.pos_y); })
  //    (data.sheets);
- //    console.log('â€¦done.');
+ //    console.log('done.');
 	// } // fix for content filtering
   //}
   // using d3.mouse on the g node instead of the svg node so we don't have to worry about margin and transforms
@@ -1378,7 +1378,7 @@ function checkMacro(d) {
 	  		.y(function(d) { return yScale(d.pos_y); })
     		(data.sheets);
     		//(data.pretexts);
-    	console.log('â€¦done.');
+    	console.log('done.');
 }
 
 function uncheckMacro(d) {
@@ -1415,7 +1415,7 @@ function uncheckMacro(d) {
 	    	(data.links); // just a workaround; no voronoi on links needed
 	    	// bug: after zooming the wrong voronoi is back (due to voronoiClick); how to make that context sensitive
 	    	// fixed with a condition in voronoiClick()
-    	console.log('â€¦done.');
+    	console.log('done.');
 }
 
 function checkPretexts() {
@@ -1435,7 +1435,7 @@ function checkPretexts() {
 	  		.x(function(d) { return xScale(d.pos_x); })
 	  		.y(function(d) { return yScale(d.pos_y); })
     		(data.pretexts);//&& data.sheets
-    	console.log('â€¦done.');
+    	console.log('done.');
 }
 
 function uncheckPretexts() {
@@ -1455,7 +1455,7 @@ function uncheckPretexts() {
 	    	(data.links); // just a workaround; no voronoi on links needed
 	    	// bug: after zooming the wrong voronoi is back (due to voronoiClick); how to make that context sensitive
 	    	// fixed with a condition in voronoiClick()
-    	console.log('â€¦done.');
+    	console.log('done.');
 }
 
 
@@ -1476,7 +1476,7 @@ function checkContexts() {
 	  		.x(function(d) { return xScale(d.pos_x); })
 	  		.y(function(d) { return yScale(d.pos_y); })
     		(data.contexts);
-    	console.log('â€¦done.');
+    	console.log('done.');
 }
 
 function uncheckContexts() {
@@ -1498,7 +1498,7 @@ function uncheckContexts() {
 	    	(data.links); // just a workaround; no voronoi on links needed
 	    // 	// bug: after zooming the wrong voronoi is back (due to voronoiClick); how to make that context sensitive
 	    // 	// fixed with a condition in voronoiClick()
-    	console.log('â€¦done.');
+    	console.log('done.');
 }	
 
 function checkBio() {
@@ -1515,7 +1515,7 @@ function checkBio() {
 	  		.x(function(d) { return xScale(d.pos_x); })
 	  		.y(function(d) { return yScale(d.pos_y); })
     		(data.biography);
-    	console.log('â€¦done.');
+    	console.log('done.');
 }	
 
 function uncheckBio() {
@@ -1536,7 +1536,7 @@ function uncheckBio() {
 	    	(data.links); // just a workaround; no voronoi on links needed
 	    	// bug: after zooming the wrong voronoi is back (due to voronoiClick); how to make that context sensitive
 	    	// fixed with a condition in voronoiClick()
-    	console.log('â€¦done.');
+    	console.log('done.');
 }	
 
 
