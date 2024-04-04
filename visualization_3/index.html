@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+        <title>Netzwerkvisualiserung der Dorsualschichten</title>
+        <!-- D3.js -->
+        <script src="https://d3js.org/d3.v4.js"></script>
+        <!-- D3-voronoi with .find(x,y) -->
+        <!-- <script src="d3-voronoi.min.js"></script> -->
+        <!-- <script src="d3-tip.js"></script> -->
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://www.koenigsfelden.uzh.ch/exist/apps/ssrq/resources/css/style.css" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" />
+        <!--<link rel="stylesheet" href="resources/css/vendor/bootstrap.min.css" />-->
+        
+        <link rel="stylesheet" href="resources/css/vendor/bootstrap-material-design.min.css" />
+        <!-- jQuery -->
+        <script src="resources/scripts/vendor/jquery-1.11.3.min.js"></script>
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<!--        <script crossorigin="anonymous" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>-->
+        <!-- Open Sans & CSS -->
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:700,400,300" rel="stylesheet" type="text/css" />
+        <style>
+            /* Style definition for dorsuallayers network visualisation */
+            .node circle {
+              stroke: #fff;
+              stroke-width: 1.5px;
+            }
+            
+            text {
+              font-family: sans-serif;
+              font-size: 10px;
+            }
+            #focusGroupText {
+              font-size: 15px;
+            
+            }
+            
+            .links > .link {
+              stroke: #999 !important;
+              opacity: 0.175 !important;
+              stroke-width: 1px !important;
+            
+            }
+            
+            .svg-wrapper {
+              display: flex;
+              align-items: center;
+              text-align: center;
+            
+            }
+            
+            .svg-wrapper > svg {
+              display: block;
+              margin: 0 auto;
+            }
+            
+            svg {
+              min-width: 200px;
+              min-height: border-box;
+              padding-left: 10px;
+            }
+            
+            .button-wrapper {
+              width: 500px;
+              height: 20%;
+              padding: 10px;
+              padding-left: 5px;
+              box-sizing: border-box;
+            
+            }
+            
+            .col-md {
+              text-align: justify;
+              margin: 5px;
+            }
+            .col-md-6 {
+              padding-right: 0px !important;
+              padding-left: 0px !important;
+              margin: 0px
+            
+            }
+            .col-md-7 {
+              padding-right: 0px !important;
+            
+            
+            }
+            #colSVG {
+              float: right !important;
+            
+            }
+            #menuAndSvg {
+              text-align: justify;
+              max-width: 100% !important;
+              margin: 0 !important;
+            }
+            #menuAndSvgContainer {
+              padding-right: 0;
+              padding-left: 0;
+              margin-right: 0;
+              margin-left: 0;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- START Dorsualschichtnetzwerkvisualisierung -->
+        <a class="anchor" id="Dorsualschichtnetzwerkvisualisierung"></a>
+        <main class="tp-row">
+            <div class="panel panel-default">
+
+                <div class="panel-heading">
+                    <h3 class="panel-title">Netzwerkvisualiserung der Dorsualschichten</h3>
+                </div>
+
+                <div class="panel-body">
+                    <p>Diese Netzwerkvisualisierung zeigt die Verbindung eines Dokuments mit einer oder mehreren Dorsualschichten. Jede Dorsualschicht wird
+                        durch eine andere Farbe dargestellt und kann ein oder ausgeblendet werden. Mit Klick auf einen Dokumentknoten werden nur die zugehörigen
+                        Dorsualschichten eingeblendet. Mit einem erneuten Klick auf den selben Dokumentkonoten wird wieder die vorherige Ansicht eingeblendet.
+                        Mit Klick auf den Namen eines Dokumentknoten wird das zugehörige Dokument geöffnet. </p>
+
+                    <!-- Menu and Visualization d3 Graph -->
+
+                    <div class="container-fluid" id="menuAndSvgContainer">
+                        <div class="row" id="menuAndSvg">
+                            <div class="col-md-5" style="padding-left:0">
+                                <div class="button-wrapper">
+                                    <div class="row">
+                                        <div class="col-md">
+                                            <form id="label-controls">
+                                                <label for="show-labels">Labels einblenden <input checked="checked" id="show-labels" name="mode" type="radio"
+                                                        value="show-label" />
+                                                </label>
+                                                <label for="hide-labels">Labels verbergen <input id="hide-labels" name="mode" type="radio" value="no-label" />
+                                                </label>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md">
+                                            <div class="btn-group-toggle" data-toggle="buttons">
+                                                <label class="btn btn-default active" id="uncheckAllLabel">
+                                                    <input autocomplete="off" class="form-check-input" checked="" id="unCheckAll" onClick="selectAll(this)"
+                                                        type="checkbox" value="0" />
+                                                    <span>Alle Dorsualschichten einblenden</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" id="GroupCheckboxDiv1"></div>
+                                    <div class="row" id="GroupCheckboxDiv2"></div>
+                                    <div class="row" id="GroupCheckboxDiv3"></div>
+                                    <div class="row" id="GroupCheckboxDiv4"></div>
+                                    <div class="row" id="GroupCheckboxDiv5"></div>
+                                    <div class="row" id="GroupCheckboxDiv6"></div>
+                                    <div class="row" id="GroupCheckboxDiv7"></div>
+                                    <div class="row" id="GroupCheckboxDiv8"></div>
+                                    <div class="row" id="GroupCheckboxDiv9"></div>
+                                    <div class="row" id="GroupCheckboxDiv10"></div>
+                                    <div class="row" id="GroupCheckboxDiv11"></div>
+                                    <div class="row" id="GroupCheckboxDiv12"></div>
+                                    <div class="row" id="GroupCheckboxDiv13"></div>
+                                    <div class="row" id="GroupCheckboxDiv14"></div>
+                                    <div class="row" id="GroupCheckboxDiv15"></div>
+                                    <div class="row" id="GroupCheckboxDiv16"></div>
+                                    <div class="row" id="GroupCheckboxDiv17"></div>
+                                </div>
+
+
+                            </div>
+                            <div class="col-md-7" id="colSVG">
+                                <div class="svg-wrapper"></div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <script src="resources/scripts/dorsuallayersGraph.js"></script>
+        </main>
+        <!-- END Dorsualschichtnetzwerkvisualisierung -->
+    </body>
+</html>
